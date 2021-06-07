@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoSingleton<UIManager>
 {
     private static UIManager _instance = null;
     public static UIManager Instance => _instance;
@@ -19,24 +19,24 @@ public class UIManager : MonoBehaviour
         _instance = this;
     }
 
-    
+
 
     private void Start()
     {
         if (UnityEngine.iOS.Device.generation.ToString().Contains("iPad"))
-            {
+        {
             Debug.Log("iPad device detected! Canvas Scaler Match Size increased to 1f");
             CanvasScaler[] scalers = GetComponents<CanvasScaler>();
             foreach (CanvasScaler canvasScaler in scalers)
             {
                 canvasScaler.matchWidthOrHeight = 1f;
             }
-        }else
+        }
+        else
         {
             Debug.Log("iPad device not detected! Canvas Scaler Match Size set to default");
         }
     }
 
-    
+
 }
-        
