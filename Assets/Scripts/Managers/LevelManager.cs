@@ -1,18 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoSingleton<LevelManager>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<LevelQuestion> allLevels;
+    public List<QuestionStruct> currentLevelQuestions;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        currentLevelQuestions = allLevels[PlayerPrefs.GetInt("Level")].questions;
+        UIManager.Instance.SetCategoryText(allLevels[PlayerPrefs.GetInt("Level")].categoryTitle);
+    }
+    public void LevelUp()
+    {
+        var level = PlayerPrefs.GetInt("Level");
+        PlayerPrefs.SetInt("Level",(level+1)%allLevels.Count);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
